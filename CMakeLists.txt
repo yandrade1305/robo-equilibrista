@@ -46,7 +46,9 @@ pico_enable_stdio_usb(robo-equilibrista 1)
 
 # Add the standard library to the build
 target_link_libraries(robo-equilibrista
-        pico_stdlib)
+        pico_stdlib
+        hardware_i2c
+        hardware_pwm)
 
 # Add the standard include files to the build
 target_include_directories(robo-equilibrista PRIVATE
