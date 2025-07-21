@@ -28,37 +28,33 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(robo-equilibrista C CXX ASM)
+project(Robo_equilibrista C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(robo-equilibrista robo-equilibrista.c )
+add_executable(Robo_equilibrista main.c src/acelero.c src/motores.c)
 
-pico_set_program_name(robo-equilibrista "robo-equilibrista")
-pico_set_program_version(robo-equilibrista "0.1")
+pico_set_program_name(Robo_equilibrista "Robo_equilibrista")
+pico_set_program_version(Robo_equilibrista "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(robo-equilibrista 0)
-pico_enable_stdio_usb(robo-equilibrista 1)
+pico_enable_stdio_uart(Robo_equilibrista 0)
+pico_enable_stdio_usb(Robo_equilibrista 1)
 
 # Add the standard library to the build
-target_link_libraries(robo-equilibrista
+target_link_libraries(Robo_equilibrista
         pico_stdlib
         hardware_i2c
         hardware_pwm)
 
 # Add the standard include files to the build
-target_include_directories(robo-equilibrista PRIVATE
+target_include_directories(Robo_equilibrista PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
-# Add any user requested libraries
-target_link_libraries(robo-equilibrista 
-        
-        )
-
-pico_add_extra_outputs(robo-equilibrista)
+pico_add_extra_outputs(Robo_equilibrista)
 
