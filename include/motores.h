@@ -16,10 +16,8 @@
 
 // --- Funções do Driver do Motor MX1508 ---
 void motor_setup();
-void motor_set_right_level(uint16_t level, bool forward);
-void motor_set_left_level(uint16_t level, bool forward);
-void motor_set_both_level(uint16_t level, bool forward);
-
-
+void motor_set_right_speed(uint16_t speed, bool forward);
+void motor_set_left_speed(uint16_t speed, bool forward);
+void motor_set_both_speed(uint16_t speed, bool forward);
 
 #endif
