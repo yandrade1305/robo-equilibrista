@@ -14,10 +14,14 @@
 #define MOTOR_RIGHT_BACKWARD    17 // IN2 para o motor direito
 #define MOTOR_RIGHT_SIGNAL      18 // PWM para o motor direito (Pino ajustado para PWM)
 
+#define PERIODO 255
+
 // --- Funções do Driver do Motor MX1508 ---
 void motor_setup();
-void motor_set_right_speed(uint16_t speed, bool forward);
-void motor_set_left_speed(uint16_t speed, bool forward);
-void motor_set_both_speed(uint16_t speed, bool forward);
+void motor_set_right_level(uint8_t level, bool forward);
+void motor_set_left_level(uint8_t level, bool forward);
+void motor_set_both_level(uint8_t level, bool forward);
+
+
 
 #endif
