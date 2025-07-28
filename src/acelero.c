@@ -85,7 +85,7 @@ void calculate_angle(){
     float accel_z_g = accel[2] / scale_factor;
 
     // 3. Calcular ângulo usando atan2 (considerando X e Z)
-    float angle_rad = atan2(accel_x_g, accel_z_g);
+    float angle_rad = atan2(accel_y_g, accel_z_g);
     
     // 4. Se precisar em graus:
     float angle_deg = angle_rad * (180.0 / M_PI);
@@ -93,7 +93,7 @@ void calculate_angle(){
     // Debug (opcional)
     printf("Accel X: %.2fg, Z: %.2fg | Angle: %.2f°\n", 
            accel_x_g, accel_z_g, angle_deg);
-    
+
     // return angle_rad; // Retorne radianos para controle PID
 
 }
