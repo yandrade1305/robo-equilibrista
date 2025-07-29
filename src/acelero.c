@@ -1,5 +1,18 @@
 #include "acelero.h"
 
+//constantes de Controle
+#define KP 100
+#define KI 0
+#define Kd 0
+#define Dt 2500 //2500 us
+
+#define ANGLE_IDEAL 70
+
+int16_t un={};
+int16_t un1={};
+float erro={};
+float erro_n1={};
+float erro_n2={};
 
 int16_t accel[3], gyro[3], temp;
 
@@ -64,7 +77,7 @@ void mpu6050_read_raw(int16_t accel[3], int16_t gyro[3], int16_t *temp) {
 void calculate_angle(){
     mpu6050_read_raw(accel, gyro, &temp); 
     printf("Accel X: %d, Y: %d, Z: %d\n", accel[0], accel[1], accel[2]);
-    printf("Gyro X: %d, Y: %d, Z: %d\n", gyro[0], gyro[1], gyro[2]);
+    // printf("Gyro X: %d, Y: %d, Z: %d\n", gyro[0], gyro[1], gyro[2]);
 
 
  // 1. Determina a escala atual do acelerômetro
@@ -85,14 +98,30 @@ void calculate_angle(){
     float accel_z_g = accel[2] / scale_factor;
 
     // 3. Calcular ângulo usando atan2 (considerando X e Z)
-    float angle_rad = atan2(accel_y_g, accel_z_g);
+    float angle_rad = fabs(atan2(accel_y_g, accel_z_g));
     
     // 4. Se precisar em graus:
     float angle_deg = angle_rad * (180.0 / M_PI);
     
     // Debug (opcional)
-    printf("Accel X: %.2fg, Z: %.2fg | Angle: %.2f°\n", 
-           accel_x_g, accel_z_g, angle_deg);
+    printf("Accel X: %.2fg, Z: %.2fg | Angle: %.2f°\n",accel_x_g, accel_z_g, angle_deg);
+
+    /*manuseio do controle PID */
+    erro_n2 = erro_n1;
+    erro_n1 = erro;
+    erro = ANGLE_IDEAL - angle_deg;
+
+    //Calculando erros
+
+    
+
+    //angulo limítrofe Central => 70 graus
+    //limite direito <70 & esquerdo > 70 //por enquanto vamos considerar assim.
+    un = un1 + (KP + KI*Dt + Kd/Dt)*erro + (-KP - 2*Kd/Dt)*erro_n1 + (Kd/Dt)*erro_n2;
+    printf("un: %d,un1:%d ,erro:%.2f , erro_n1:%.2f, erro_n2:%.2f\n",un,un1,erro,erro_n1,erro_n2);
+    un1 = un;
+
+    // printf("un: %d,un1:%d ,erro:%.2f , erro_n1:%.2f, erro_n2:%.2f\n",un,un1,erro,erro_n1,erro_n2);
 
     // return angle_rad; // Retorne radianos para controle PID
 

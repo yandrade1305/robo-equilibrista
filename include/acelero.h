@@ -5,12 +5,19 @@
 #include "pico/stdlib.h" 
 #include <math.h>
 #include <stdio.h>  
+// #include <stdlib.h>
 
 // --- Definições do MPU6050 ---
 #define I2C_PORT i2c1
 #define I2C_SDA 2
 #define I2C_SCL 3
 #define MPU6050_ADDR 0x68
+
+typedef struct Levels {
+    uint8_t d;
+    uint8_t e;
+}LevDE;
+
 
 
 // --- Funções do MPU6050 ---
