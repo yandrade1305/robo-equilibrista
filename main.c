@@ -20,7 +20,7 @@ int main() {
     bool dir_state = false;
 
     const float total_time = 10.0f; // 10 segundos para aceleração total
-    const uint16_t max_speed = 10000; // Nosso wrap value
+    uint8_t max_speed = {}; // Nosso wrap value inica em 0
     const float step_time = 0.05f;    // 50ms entre atualizações
 
     while (1) {
@@ -28,12 +28,11 @@ int main() {
         //processos do MPU
         // mpu6050_read_raw(accel, gyro, &temp); 
 
-        calculate_angle();
+        calculate_angle(&max_speed,&dir_state);
 
 
-
-
-        sleep_ms(1000); 
+        printf("Nivel %d, direção:%d\n",max_speed,dir_state);
+        sleep_ms(50); 
 
 
         // /*Processos dos motores */
